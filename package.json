@@ -1,0 +1,14 @@
+{
+  "name": "react-ru-tutorial",
+  "version": "1.0.0",
+  "description": "React RU tutorial",
+  "main": "index.html",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "author": "Lisa Floyd",
+  "license": "MIT",
+  "devDependencies": {
+    "express": "^4.16.2"
+  }
+}
