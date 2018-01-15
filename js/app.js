@@ -24,6 +24,7 @@ var Article = React.createClass({
 	  bigText: React.PropTypes.string.isRequired
 	})
   },
+
   getInitialState: function() {
 	return {
 	  visible: false
@@ -57,50 +58,75 @@ var Article = React.createClass({
 
 
 var News = React.createClass({
-propTypes: {
-data: React.PropTypes.array.isRequired
-},
-getInitialState: function() {
-return {
-counter: 0
-}
-},
-onTotalNewsClick: function() {
-this.setState({counter: ++this.state.counter });
-},
-render: function() {
-var data = this.props.data;
-var newsTemplate;
-if (data.length > 0) {
-newsTemplate = data.map(function(item, index) {
-return (
-<div key={index}>
-<Article data={item} />
-</div>
-)
-})
-} else {
-newsTemplate = <p>К сожалению новостей нет</p>
-}
-return (
-<div className='news'>
-{newsTemplate}
-<strong
-className={'news__count ' + (data.length > 0 ? '':'none') }
-onClick={this.onTotalNewsClick}>
-Всего новостей: {data.length}
-</strong>
-</div>
-);
-}
+	propTypes: {
+		data: React.PropTypes.array.isRequired
+	},
+
+	getInitialState: function() {
+		return {
+			counter: 0
+		}
+	},
+
+	render: function() {
+		var data = this.props.data;
+		var newsTemplate;
+			if (data.length > 0) {
+				newsTemplate = data.map(function(item, index) {
+					return (
+						<div key={index}>
+							<Article data={item} />
+						</div>
+					)
+			})
+			} else {
+				newsTemplate = <p>К сожалению новостей нет</p>
+			}
+			return (
+				<div className='news'>
+					{newsTemplate}
+						<strong className={'news__count ' + (data.length > 0 ? '':'none') } onClick={this.onTotalNewsClick}>
+							Всего новостей: {data.length}
+						</strong>
+				</div>
+			);
+	}
 });
 
+var Add = React.createClass({
+	componentDidMount: function() {
+		ReactDOM.findDOMNode(this.refs.author).focus();
+	},
 
-var App = React.createClass({
+	onBtnClickHandler: function(e) {
+		e.preventDefault();
+	},
+
+	render: function() {
+		return (
+			<form className='add cf'>
+				<input
+					type='text'
+					className='add__author'
+					defaultValue=''
+					placeholder='Ваше имя'
+					ref='author'
+				/>
+				<textarea className={'add__text '+'add__none'} defaultValue='' placeholder='Текст новости' ref='text'></textarea>
+				<label className='add__checkrule'>
+				<input type='checkbox' defaultChecked={false} ref='checkrule' />Я согласен с правилами</label>
+				<button className='add__btn' onClick={this.onBtnClickHandler} ref='alert_button'>Показать alert</button>
+			</form>
+		);
+	}
+});
+
+var App = React.createClass ({
 	render: function() {
 		return (
 			<div className='app'>
 				<h3>Новости</h3>
+				<Add></Add>
 				<News data={my_news} />
 			</div>
 		);
