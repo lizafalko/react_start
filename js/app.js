@@ -94,12 +94,11 @@ var News = React.createClass({
 });
 
 var Add = React.createClass({
-
-	getInitialState: function() {
+	getInitialState: function() { //устанавливаем начальное состояние (state)
 		return {
 			btnIsDisabled: true
 		};
-	}
+	},
 
 	componentDidMount: function() {
 		ReactDOM.findDOMNode(this.refs.author).focus();
@@ -107,10 +106,14 @@ var Add = React.createClass({
 
 	onBtnClickHandler: function(e) {
 		e.preventDefault();
+		var author = ReactDOM.findDOMNode(this.refs.author).value;
+		var text = ReactDOM.findDOMNode(this.refs.text).value;
+		alert(author + '\n' + text);
+
 	},
 
 	onCheckRuleClick: function(e) {
-		this.setState({btnIsDisabled: !this.state.btnIsDisabled});
+		this.setState({btnIsDisabled: !this.state.btnIsDisabled}); //устанавливаем значение в state
 	},
 
 	render: function() {
@@ -123,7 +126,7 @@ var Add = React.createClass({
 					placeholder='Ваше имя'
 					ref='author'
 				/>
-				<textarea className={'add__text '+'add__none'} defaultValue='' placeholder='Текст новости' ref='text'></textarea>
+				<textarea className='add__text add__text--no-resize' defaultValue='' placeholder='Текст новости' ref='text'></textarea>
 				<label className='add__checkrule'>
 					<input type='checkbox' ref='checkrule' onChange={this.onCheckRuleClick}/>Я согласен с правилами
 				</label>
@@ -148,6 +151,5 @@ var App = React.createClass ({
 });
 
 ReactDOM.render(
-<App />,
-document.getElementById('root')
-);
+	<App />,
+	document.getElementById('root'));

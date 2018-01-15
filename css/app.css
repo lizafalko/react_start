@@ -14,7 +14,7 @@ body {
 	padding: 5px;
 }
 
-.add__none {
+.add__text--no-resize {
 	resize: none;
 }
 
