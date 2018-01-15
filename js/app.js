@@ -94,12 +94,23 @@ var News = React.createClass({
 });
 
 var Add = React.createClass({
+
+	getInitialState: function() {
+		return {
+			btnIsDisabled: true
+		};
+	}
+
 	componentDidMount: function() {
 		ReactDOM.findDOMNode(this.refs.author).focus();
 	},
 
 	onBtnClickHandler: function(e) {
 		e.preventDefault();
+	},
+
+	onCheckRuleClick: function(e) {
+		this.setState({btnIsDisabled: !this.state.btnIsDisabled});
 	},
 
 	render: function() {
@@ -114,8 +125,11 @@ var Add = React.createClass({
 				/>
 				<textarea className={'add__text '+'add__none'} defaultValue='' placeholder='Текст новости' ref='text'></textarea>
 				<label className='add__checkrule'>
-				<input type='checkbox' defaultChecked={false} ref='checkrule' />Я согласен с правилами</label>
-				<button className='add__btn' onClick={this.onBtnClickHandler} ref='alert_button'>Показать alert</button>
+					<input type='checkbox' ref='checkrule' onChange={this.onCheckRuleClick}/>Я согласен с правилами
+				</label>
+				<button className='add__btn' onClick={this.onBtnClickHandler} ref='alert_button' disabled={this.state.btnIsDisabled}>
+					Показать alert
+				</button>
 			</form>
 		);
 	}
