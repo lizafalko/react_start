@@ -94,14 +94,16 @@ var News = React.createClass({
 });
 
 var Add = React.createClass({
-	getInitialState: function() { //устанавливаем начальное состояние (state)
+	getInitialState: function() {
 		return {
-			btnIsDisabled: true
+			agreeNotChecked: true, //начальное состояние — всё пустое
+			authorIsEmpty: true,
+			textIsEmpty: true
 		};
 	},
 
 	componentDidMount: function() {
-		ReactDOM.findDOMNode(this.refs.author).focus();
+		ReactDOM.findDOMNode(this.refs.author).focus(); //поставить автофокус на инпут
 	},
 
 	onBtnClickHandler: function(e) {
@@ -113,7 +115,23 @@ var Add = React.createClass({
 	},
 
 	onCheckRuleClick: function(e) {
-		this.setState({btnIsDisabled: !this.state.btnIsDisabled}); //устанавливаем значение в state
+		this.setState({agreeNotChecked: !this.state.agreeNotChecked}); //устанавливаем значение в state
+	},
+
+	onAuthorChange: function(e) {
+		if (e.target.value.trim().length > 0) {
+			this.setState.({authorIsEmpty: false})
+		} else {
+			this.setState.({authorIsEmpty: true})
+		}
+	},
+
+	onTextChange: function(e) {
+		if (e.target.value.trim().length > 0) {
+			this.setState({textIsEmpty: false})
+		} else {
+			this.setState({textIsEmpty: true})
+		}
 	},
 
 	render: function() {
@@ -122,15 +140,15 @@ var Add = React.createClass({
 				<input
 					type='text'
 					className='add__author'
-					defaultValue=''
+					onChange={this.onAuthorChange}
 					placeholder='Ваше имя'
 					ref='author'
 				/>
-				<textarea className='add__text add__text--no-resize' defaultValue='' placeholder='Текст новости' ref='text'></textarea>
+				<textarea className='add__text add__text--no-resize' onChange={this.onTextChange} placeholder='Текст новости' ref='text'></textarea>
 				<label className='add__checkrule'>
 					<input type='checkbox' ref='checkrule' onChange={this.onCheckRuleClick}/>Я согласен с правилами
 				</label>
-				<button className='add__btn' onClick={this.onBtnClickHandler} ref='alert_button' disabled={this.state.btnIsDisabled}>
+				<button className='add__btn' onClick={this.onBtnClickHandler} ref='alert_button' disabled={agreeNotChecked || authorIsEmpty || textIsEmpty}>
 					Показать alert
 				</button>
 			</form>
