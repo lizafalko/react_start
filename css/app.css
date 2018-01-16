@@ -2,6 +2,10 @@
 	display: none !important;
 }
 
+.text_none {
+	resize: none;
+}
+
 body {
 	background-color: #F67280;
 	font-family: sans-serif;
